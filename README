@@ -1,1 +1,8 @@
-pymarksim readme
+
+This is a python module to train/check Markov Chains from input texts.
+
+Requirements:
+	- NLTK
+	- Python 2.6
+
+See more information at http://pyevolve.sourceforge.net/wordpress
