@@ -7,6 +7,17 @@ import gzip
 
 from nltk import word_tokenize
 
+class MarkovItem(object):
+    def __init__(self, item, probability):
+        self.item = item
+        self.probability = probability    
+
+    def __repr__(self):
+        return "<MarkovItem '%s':%.2f>" % (self.item, self.probability)
+
+    def __eq__(self, other):
+        return self.item == other.item
+
 def run_train(tokenized, options):
 
     markov_dict = {}
@@ -24,12 +35,19 @@ def run_train(tokenized, options):
     for i in xrange(0, len(tokenized)-2):
         key = (tokenized[i], tokenized[i+1])
         value = tokenized[i+2]
+        new_transition = MarkovItem(value, 1.0)
 
+        # If the key is already present in the markov dict
         if key in markov_dict:
-            if value not in markov_dict[key]:
-                markov_dict[key].append(value)
+            # If we still don't have that transition
+            if new_transition not in markov_dict[key]:
+                markov_dict[key].append(new_transition)
+            else:
+                # if we have that transition
+                pass                
         else:
-            markov_dict[key] = [value]
+            markov_dict[key] = [new_transition]
+
 
     file_handle = gzip.open(options.dump_file, "w+b",
                             compresslevel=options.compress_level)
@@ -37,8 +55,8 @@ def run_train(tokenized, options):
     file_handle.close()
 
     # Show the chain
-    # for k,v in markov_dict.items():
-    #    print k,v
+    for k,v in markov_dict.items():
+       print k,v
 
     print "Done !"
 
