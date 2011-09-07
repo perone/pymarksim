@@ -73,7 +73,7 @@ def run_check(tokenized, options):
 
     for i in xrange(0, len(tokenized)-2):
         key = (tokenized[i], tokenized[i+1])
-        value = tokenized[i+2]
+        value = MarkovItem(tokenized[i+2], 1.0)
 
         if value in markov_dict.get(key, []):
             accept_rate += 1.0
