@@ -55,8 +55,8 @@ def run_train(tokenized, options):
     file_handle.close()
 
     # Show the chain
-    for k,v in markov_dict.items():
-       print k,v
+    #for k,v in markov_dict.items():
+    #   print k,v
 
     print "Done !"
 
